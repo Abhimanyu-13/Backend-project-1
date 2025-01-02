@@ -1,13 +1,14 @@
 const express = require('express')
 const { connection } = require('./db')
-const {UserModel} = require('./models/Users.model')
+const { UserModel } = require('./models/Users.model')
 const jwt = require('jsonwebtoken')
-const {userRouter} = require('./routes/userRoutes')
+const { userRouter } = require('./routes/userRoutes')
+const port = process.env.port || 3100
 
 const app = express()
 
 app.use(express.json())
-app.use('/users',userRouter)
+app.use('/users', userRouter)
 
 app.get("/", (req, res) => {
     const token = req.headers.authorization
@@ -50,7 +51,7 @@ app.post("/register", async (req, res) => {
     }
 })
 
-app.listen(process.env.port, async () => {
+app.listen(port, async () => {
     try {
         await connection
         console.log("COnnected to DB");
